@@ -12,7 +12,7 @@
 
 (->> (rotate binary-numbers)
      (map gamma-and-epsilon)
-     (apply map list)
+     (rotate)
      (map str/join)
      (map #(Integer/parseInt % 2))
      (reduce *))
