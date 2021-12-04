@@ -2,9 +2,6 @@
   (:require [clojure.string :as str]
             [clojure.java.io :as io]))
 
-; utils
-(defn rotate [xs] (apply map list xs))
-
 ; part one
 (def lines (str/split-lines (slurp (io/resource "day4"))))
 
@@ -25,7 +22,7 @@
 (defn possible-ways-to-bingo
   "Return a set with all possible number combos to reach bingo for the given board."
   [board]
-  (concat (map set board) (map set (rotate board))))
+  (concat (map set board) (map set (apply map list board))))
 
 (def boards-bingo-ways
   "A seq with all possible ways boards can reach bingo."
