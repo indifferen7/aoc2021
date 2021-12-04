@@ -54,3 +54,23 @@
                  (* just-drawn
                     (reduce + numbers-not-drawn-in-board)))))))
 
+; part two
+(loop [numbers numbers-to-draw
+       numbers-drawn #{}]
+  (let [[just-drawn & numbers-left] numbers
+        new-numbers-drawn (conj numbers-drawn just-drawn)
+        bingo? (bingo-fn new-numbers-drawn)
+        outcome (map #(filter bingo? %) boards-bingo-ways)
+        all-has-won? (every? false? (map empty? outcome))
+        ]
+    (if (not all-has-won?)
+      (recur numbers-left new-numbers-drawn)
+      (let [bingo-last-round? (bingo-fn numbers-drawn)
+            last-round-outcome (map #(filter bingo-last-round? %) boards-bingo-ways)
+            loser-idx (first (keep-indexed #(if (empty? %2) %1) last-round-outcome))
+            board-numbers (set (flatten (nth boards loser-idx)))
+            numbers-not-drawn-in-board (apply disj board-numbers new-numbers-drawn)]
+        (println )
+        (println "Result part two:"
+                 (* just-drawn
+                    (reduce + numbers-not-drawn-in-board)))))))
